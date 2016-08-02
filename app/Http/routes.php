@@ -10,26 +10,30 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-    Route::group(['middleware' => ['web']], function () {
 
-    });
 
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('home');
+//Routes setting to redirect
 
-    Route::post('/signup', [
-      'uses' => 'UserController@postSignUp',
-      'as' => 'signup'
-    ]);
+  Route::get('/', function () {
+      return view('welcome');
+  })->name('welcome');
+  Route::post('/signup',[
+    'uses' => 'UserController@postSignUp',
+    'as'   => 'signup'
+  ]);
+  Route::post('/signin',[
+    'uses' => 'UserController@postSignIn',
+    'as'   => 'signin'
+  ]);
 
-    Route::post('/signin', [
-      'uses' => 'UserController@postSignIn',
-      'as' => 'signin'
-    ]);
+  Route::get('/dashboard',[
+    'uses' => 'UserController@getDashboard',
+    'as'   => 'dashboard',
+    'middleware' => 'auth'
+  ]);
 
-    Route::get('/dashboard', [
-      'uses' => 'UserController@getDashboard',
-      'as' => 'dashboard',
-      'middleware' => 'auth'
-    ]);
+  Route::post('/createpost',[
+    'uses' => 'PostController@postCreatePost',
+    'as'   => 'post.create'
+
+  ]);
